@@ -17,11 +17,18 @@
         <!-- 想減少動態的人不加 scrub，就是一般的靜態頁面 -->
         <script>
             if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("scrub");
+            // iOS 要有 touchstart 監聽，:active 按壓回饋才會在手指按下時出現
+            addEventListener("touchstart", () => {}, { passive: true });
         </script>
         <script src="main.js" defer></script>
     </head>
     <body>
         <a class="skip" href="#work">跳到作品介紹</a>
+
+        <nav class="pill" aria-label="頁面導覽">
+            <a href="#work">作品</a>
+            <a href="#contact">聯絡</a>
+        </nav>
 
         <main>
             <div class="run">

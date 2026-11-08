@@ -130,7 +130,7 @@
         }
 
         heroPanel.style.opacity = 1 - clamp01(p / 0.14);
-        hint.style.opacity = p > 0 ? 0 : 1;
+        hint.style.opacity = 1 - clamp01(p / 0.04); // 跟著捲動淡出，不要瞬間消失
         workPanel.style.opacity = clamp01((p - 0.62) / 0.15);
         workImg.style.opacity = clamp01((p - 0.92) / 0.07); // 拼完才換成清晰的真實截圖
 

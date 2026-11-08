@@ -5,6 +5,8 @@
     --muted: #5d564d;
     --red: #b8261f;
     --peg: #d9d0c1;
+    --glass: rgba(245, 239, 228, 0.72);
+    --glass-edge: rgba(27, 25, 23, 0.12);
     --gutter: clamp(16px, 4vw, 56px);
     --font-display: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
 }
@@ -15,6 +17,8 @@
         --muted: #b5ac9e;
         --red: #ff7a6e;
         --peg: #38332d;
+        --glass: rgba(23, 21, 19, 0.72);
+        --glass-edge: rgba(243, 236, 224, 0.16);
     }
 }
 * {
@@ -29,7 +33,7 @@ body {
     background-color: var(--board);
     color: var(--ink);
     font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
-    font-size: 18px;
+    font-size: 1.125rem; /* 用 rem → 跟著使用者的瀏覽器字級放大 */
     line-height: 1.7;
 }
 img {
@@ -64,6 +68,49 @@ h2,
 }
 .skip:focus {
     transform: none;
+}
+
+/* ===== 導覽：浮在內容上的半透明膠囊，內容從底下捲過 ===== */
+.pill {
+    position: fixed;
+    top: 12px;
+    right: var(--gutter);
+    z-index: 5;
+    display: flex;
+    padding: 4px;
+    border: 1px solid var(--glass-edge);
+    border-radius: 999px;
+    background-color: var(--glass);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+}
+.pill a {
+    display: grid;
+    place-items: center;
+    min-width: 64px;
+    min-height: 44px; /* 手指好按的最小高度 */
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.1s ease-out;
+    -webkit-tap-highlight-color: transparent;
+}
+.pill a:active {
+    transform: scale(0.96);
+}
+@media (prefers-reduced-transparency: reduce) {
+    .pill {
+        background-color: var(--board);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}
+@media (prefers-contrast: more) {
+    .pill {
+        background-color: var(--board);
+        border-color: var(--ink);
+    }
 }
 
 /* ===== 開場：沒有動畫時就是上下排列的一般版面 ===== */
@@ -205,7 +252,8 @@ html.scrub .hint {
     color: var(--board);
     font-weight: 700;
     text-decoration: none;
-    transition: transform 0.15s ease-out;
+    transition: transform 0.1s ease-out;
+    -webkit-tap-highlight-color: transparent;
 }
 .button:active {
     transform: scale(0.97);
@@ -254,6 +302,10 @@ footer {
     }
 }
 @media (max-width: 700px) {
+    /* 手機的大標題在左上角，要讓出導覽的高度 */
+    .panel {
+        padding-top: 76px;
+    }
     h1 {
         font-size: min(26vw, 20svh);
     }
@@ -265,7 +317,8 @@ footer {
     html {
         scroll-behavior: auto;
     }
-    .button {
+    .button,
+    .pill a {
         transition: none;
     }
 }
