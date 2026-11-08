@@ -1,0 +1,271 @@
+:root {
+    color-scheme: light dark;
+    --board: #f5efe4;
+    --ink: #1b1917;
+    --muted: #5d564d;
+    --red: #b8261f;
+    --peg: #d9d0c1;
+    --gutter: clamp(16px, 4vw, 56px);
+    --font-display: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --board: #171513;
+        --ink: #f3ece0;
+        --muted: #b5ac9e;
+        --red: #ff7a6e;
+        --peg: #38332d;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    background-color: var(--board);
+    color: var(--ink);
+    font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+}
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+a {
+    color: inherit;
+}
+:focus-visible {
+    outline: 3px solid var(--red);
+    outline-offset: 3px;
+}
+h1,
+h2,
+.next p {
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+.skip {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    padding: 8px 16px;
+    background-color: var(--ink);
+    color: var(--board);
+    transform: translateY(-200%);
+}
+.skip:focus {
+    transform: none;
+}
+
+/* ===== 開場：沒有動畫時就是上下排列的一般版面 ===== */
+canvas,
+.hint {
+    display: none;
+}
+.panel {
+    display: grid;
+    gap: 32px;
+    padding: var(--gutter);
+}
+h1 {
+    font-size: clamp(4.5rem, min(13vw, 32svh), 15rem);
+    white-space: nowrap;
+}
+.tagline {
+    max-width: 26em;
+    margin-top: 24px;
+    font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+    line-height: 1.6;
+    color: var(--muted);
+}
+.index {
+    font-weight: 700;
+    color: var(--red);
+}
+.slot-hero {
+    width: min(100%, 480px);
+}
+.slot-work {
+    width: min(100%, 1000px);
+}
+
+/* ===== 拼豆動畫：捲動 320svh 的距離，畫面黏住不動 ===== */
+html.scrub .run {
+    height: 320svh;
+}
+html.scrub .stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+}
+html.scrub canvas {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+/* 兩個畫面疊在一起，由 main.js 依捲動距離切換透明度 */
+html.scrub .panel {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+html.scrub .panel-hero {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+}
+html.scrub .slot-hero {
+    justify-self: center;
+    width: min(100%, 72svh);
+}
+html.scrub .panel-work {
+    grid-template-rows: auto minmax(0, 1fr);
+    justify-items: center;
+    align-items: center;
+    opacity: 0;
+}
+html.scrub .index {
+    justify-self: start;
+}
+/* 寬度同時受畫面寬和高限制，截圖才放得下 */
+html.scrub .slot-work {
+    width: min(100%, calc((100svh - 2 * var(--gutter) - 90px) * 1.6));
+}
+html.scrub .slot img {
+    opacity: 0; /* 先讓豆子拼，圖片由 main.js 在最後才淡入 */
+}
+html.scrub .hint {
+    display: block;
+    position: absolute;
+    left: var(--gutter);
+    bottom: var(--gutter);
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+@media (max-width: 700px) {
+    html.scrub .panel-hero {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+        align-content: start;
+    }
+    html.scrub .slot-hero {
+        width: min(100%, 44svh);
+    }
+}
+
+/* ===== 作品介紹 ===== */
+.work {
+    padding: clamp(64px, 12vw, 160px) var(--gutter);
+}
+.work h2 {
+    max-width: 11em;
+    font-size: clamp(2.6rem, 7.5vw, 6.5rem);
+    text-wrap: balance; /* 平均分行，避免最後一行只剩一個字 */
+}
+.work-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px clamp(32px, 6vw, 96px);
+    margin-top: clamp(40px, 6vw, 80px);
+}
+.lead {
+    font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+}
+.facts {
+    grid-row: span 2;
+    list-style: none;
+}
+.facts li {
+    padding: 16px 0;
+    border-top: 2px solid var(--ink);
+}
+.facts b {
+    display: block;
+    font-size: 1.5rem;
+    line-height: 1.3;
+}
+.button {
+    justify-self: start;
+    align-self: start;
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background-color: var(--red);
+    color: var(--board);
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.15s ease-out;
+}
+.button:active {
+    transform: scale(0.97);
+}
+
+/* ===== 空的洞洞板：下一件作品的位置 ===== */
+.next {
+    display: grid;
+    place-items: center;
+    min-height: 56svh;
+    margin: 0 var(--gutter);
+    background-image: radial-gradient(circle, var(--peg) 4px, transparent 5px);
+    background-size: 24px 24px;
+}
+.next p {
+    padding: 8px 20px;
+    background-color: var(--board);
+    font-size: clamp(1.8rem, 5vw, 4rem);
+}
+
+/* ===== 聯絡 ===== */
+.contact {
+    padding: clamp(64px, 12vw, 160px) var(--gutter) 64px;
+}
+.contact h2 {
+    font-size: clamp(4rem, 14vw, 12rem);
+}
+.mail {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: clamp(1.1rem, 3.4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--red);
+    overflow-wrap: anywhere;
+}
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px var(--gutter);
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+@media (hover: hover) {
+    .button:hover {
+        transform: translateY(-2px);
+    }
+}
+@media (max-width: 700px) {
+    h1 {
+        font-size: min(26vw, 20svh);
+    }
+    .work-body {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    .button {
+        transition: none;
+    }
+}

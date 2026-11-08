@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>張栢睿｜作品總覽</title>
+        <meta name="description" content="張栢睿的作品總覽：實踐大學高雄校區的學生，用 HTML、CSS 和 JavaScript 把想法一顆一顆拼成網頁。" />
+        <link rel="icon" href="assets/avatar.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <!-- text= 只下載大標題用到的字｜shortcut: 大標題出現新字要加進來，否則會變備用字體 -->
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@900&display=swap&text=張栢睿作品一顆拼起來實踐大學高雄校區介紹網站下幅裝中。聊聊0123456789"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <!-- 想減少動態的人不加 scrub，就是一般的靜態頁面 -->
+        <script>
+            if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("scrub");
+        </script>
+        <script src="main.js" defer></script>
+    </head>
+    <body>
+        <a class="skip" href="#work">跳到作品介紹</a>
+
+        <main>
+            <div class="run">
+                <div class="stage">
+                    <canvas aria-hidden="true"></canvas>
+
+                    <section class="panel panel-hero">
+                        <div class="copy">
+                            <h1>張栢睿</h1>
+                            <p class="tagline">我是張栢睿，實踐大學高雄校區的學生，用 HTML、CSS 和 JavaScript 把想法一顆一顆拼成網頁。</p>
+                        </div>
+                        <div class="slot slot-hero">
+                            <img src="assets/avatar.png" alt="張栢睿的頭像：一隻紅黑色的瓢蟲" width="256" height="225" />
+                        </div>
+                        <p class="hint" aria-hidden="true">往下捲，把瓢蟲拆開</p>
+                    </section>
+
+                    <section class="panel panel-work" aria-label="作品 01 預覽">
+                        <p class="index">作品 01</p>
+                        <div class="slot slot-work">
+                            <img src="assets/shih-chien.jpg" alt="實踐大學高雄校區介紹網站的首頁截圖：巨大的年份 1997 與書法校名" width="1280" height="800" />
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <section class="work" id="work">
+                <h2>實踐大學高雄校區介紹網站</h2>
+                <div class="work-body">
+                    <p class="lead">
+                        我的「網頁程式設計」總作業。沒有框架、沒有建置工具，只用 HTML、CSS 和 JavaScript，把學校的沿革和師長介紹做成一個完整的網站。
+                    </p>
+                    <ul class="facts">
+                        <li><b>12</b> 個頁面，中英雙語</li>
+                        <li><b>1958 → 1997</b> 捲動時走過校史，最後寫出書法校名</li>
+                        <li><b>253KB → 3KB</b> 圖示字型只留用到的圖示，手機載入更快</li>
+                        <li><b>手機版、深色模式、減少動態</b> 全部都有</li>
+                    </ul>
+                    <a class="button" href="https://boris05291-dev.github.io/shih-chien/home.html">看線上網站 <span aria-hidden="true">↗</span></a>
+                </div>
+            </section>
+
+            <section class="next" aria-label="下一件作品">
+                <p>下一幅，拼裝中。</p>
+            </section>
+
+            <section class="contact" id="contact">
+                <h2>來聊聊</h2>
+                <a class="mail" href="mailto:a115510310@gm7.usc.edu.tw">a115510310@gm7.usc.edu.tw</a>
+            </section>
+        </main>
+
+        <footer>
+            <span>© 2026 張栢睿</span>
+            <a href="https://github.com/boris05291-dev">GitHub</a>
+        </footer>
+    </body>
+</html>
